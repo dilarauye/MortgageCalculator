@@ -1,13 +1,17 @@
-﻿Feature: Calculator
-![Calculator](https://specflow.org/wp-content/uploads/2020/09/calculator.png)
-Simple calculator for adding **two** numbers
+﻿Feature: Mortgage Calculator
 
-Link to a feature: [Calculator](MortgageCalculator/Features/Calculator.feature)
-***Further read***: **[Learn more about how to generate Living Documentation](https://docs.specflow.org/projects/specflow-livingdoc/en/latest/LivingDocGenerator/Generating-Documentation.html)**
+Background: 
+Given user is on the Home Page
 
-@mytag
-Scenario: Add two numbers
-	Given the first number is 50
-	And the second number is 70
-	When the two numbers are added
-	Then the result should be 120
+
+Scenario: User should be able to see product depending on age and zip code 
+When user fills in Borrower Details '<age>', '<propertyValue>', '<zipCode>', '<firstMortgageBalance>'
+Examples: 
+| age | propertyValue | zipCode | firstMortgageBalance |
+| 50  | 125000        | 77498   | 300000               |
+
+Scenario: User should be able to see product depending on age and zip code - with second mortgage 
+When user fills in Borrower Details with second mortgage '<age>', '<propertyValue>', '<zipCode>', '<firstMortgageBalance>', '<secondMortgageBalance>'
+Examples: 
+| age | propertyValue | zipCode | firstMortgageBalance | secondMortgageBalance |
+| 50  | 125000        | 77498   | 300000               | 200000                |

@@ -7,15 +7,36 @@ using Microsoft.Extensions.Configuration;
 
 namespace MortgageCalculator.Support
 {
-    internal class CommonMethods
+    public class CommonMethods
     {
 
         public static string GetAppSettingsValue(string key)
         {
 
-            return new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("ApSettings.json").Build().GetSection(key).Value;
+            return new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("AppSettings.json").Build().GetSection(key).Value;
 
         }
+
+
+        public static string GetDateOfBirth(int age)
+        {
+
+            // Calculate the year of birth
+            int currentYear = DateTime.Now.Year;
+            int yearOfBirth = currentYear - age;
+
+
+            // Return the date of birth assuming the same month and day as today
+            return new DateTime(yearOfBirth, DateTime.Now.Month, DateTime.Now.Day).ToString();
+
+
+        }
+
+
+
+
+
+
 
     }
 }

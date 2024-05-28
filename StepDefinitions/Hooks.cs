@@ -1,34 +1,94 @@
-﻿using TechTalk.SpecFlow;
+﻿using Microsoft.Playwright;
+using MortgageCalculator.Support;
+using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Infrastructure;
 
 namespace MortgageCalculator.StepDefinitions
 {
     [Binding]
-    public sealed class Hooks
+    public class Hooks : CommonMethods
     {
-        // For additional details on SpecFlow hooks see http://go.specflow.org/doc-hooks
 
-        [BeforeScenario("@tag1")]
-        public void BeforeScenarioWithTag()
+        private IPlaywright playwright;
+        private IBrowser browser;
+        private IBrowserContext context;
+        public IPage page;
+        public static int numberOfFailedtests;
+        private static BrowserNewContextOptions testDevice;
+        private readonly ScenarioContext scenarioContext;
+        private readonly ISpecFlowOutputHelper outputHelper;
+
+        public Hooks(ScenarioContext scenarioContext, ISpecFlowOutputHelper specFlowOutputHelper)
         {
-            // Example of filtering hooks using tags. (in this case, this 'before scenario' hook will execute if the feature/scenario contains the tag '@tag1')
-            // See https://docs.specflow.org/projects/specflow/en/latest/Bindings/Hooks.html?highlight=hooks#tag-scoping
 
-            //TODO: implement logic that has to run before executing each scenario
+            this.scenarioContext = scenarioContext;
+            this.outputHelper = specFlowOutputHelper;
         }
+       
 
-        [BeforeScenario(Order = 1)]
-        public void FirstBeforeScenario()
+        [BeforeScenario]
+        public async Task CreatePlaywright()
         {
-            // Example of ordering the execution of hooks
-            // See https://docs.specflow.org/projects/specflow/en/latest/Bindings/Hooks.html?highlight=order#hook-execution-order
 
-            //TODO: implement logic that has to run before executing each scenario
+            playwright ??= await Playwright.CreateAsync();
+            testDevice = playwright.Devices[GetAppSettingsValue("TestDevice")];
+
+            browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+            {
+                Headless = false,
+                Timeout = 30000,
+                SlowMo = 0
+
+            });
+
+            context = await browser.NewContextAsync(new(testDevice));
+            await context.Tracing.StartAsync(new()
+            {
+                Screenshots = true,
+                Snapshots = true,
+                Sources = true
+            });
+
+            page = await context.NewPageAsync();
+            var url = GetAppSettingsValue("Url");
+            await page.GotoAsync(url);
+            outputHelper.WriteLine($"test url is {url}");
+
+
+
         }
 
         [AfterScenario]
-        public void AfterScenario()
+        public async Task AfterScenario()
         {
-            //TODO: implement logic that has to run after executing each scenario
+           
+            if ( scenarioContext.TestError != null )
+            {
+                numberOfFailedtests++;
+                await context.Tracing.StopAsync(new()
+                {
+
+                    Path = $"{scenarioContext.ScenarioInfo.Title}_{numberOfFailedtests}.trace.zip"
+
+                });
+
+            }
+            if (page  != null)
+            {
+                await page.CloseAsync();
+
+            }
+            if (context != null)
+            {
+                await context.CloseAsync();
+            }
+            if (browser != null)
+            {
+                await browser.CloseAsync();
+            }
+
+            playwright?.Dispose();
+
         }
     }
 }
