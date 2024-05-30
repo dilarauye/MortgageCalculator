@@ -2,11 +2,13 @@
 using MortgageCalculator.Support;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Infrastructure;
+using static MortgageCalculator.Support.CommonMethods;
+
 
 namespace MortgageCalculator.StepDefinitions
 {
     [Binding]
-    public class Hooks : CommonMethods
+    public class Hooks 
     {
 
         private IPlaywright playwright;
@@ -36,7 +38,7 @@ namespace MortgageCalculator.StepDefinitions
             browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
                 Headless = false,
-                Timeout = 30000,
+                Timeout = 120000,
                 SlowMo = 0
 
             });
@@ -52,6 +54,7 @@ namespace MortgageCalculator.StepDefinitions
             page = await context.NewPageAsync();
             var url = GetAppSettingsValue("Url");
             await page.GotoAsync(url);
+            await page.WaitForLoadStateAsync();
             outputHelper.WriteLine($"test url is {url}");
 
 

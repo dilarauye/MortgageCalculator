@@ -28,7 +28,7 @@ namespace MortgageCalculator.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "Calculator.feature"
+#line 1 "MortgageCalculator.feature"
 #line hidden
         
         public MortgageCalculatorFeature(MortgageCalculatorFeature.FixtureData fixtureData, MortgageCalculator_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
@@ -89,19 +89,20 @@ testRunner.Given("user is on the Home Page", ((string)(null)), ((TechTalk.SpecFl
             this.TestTearDown();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="User should be able to see product depending on age and zip code")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="User should be able to see Estimate results")]
         [Xunit.TraitAttribute("FeatureTitle", "Mortgage Calculator")]
-        [Xunit.TraitAttribute("Description", "User should be able to see product depending on age and zip code")]
-        [Xunit.InlineDataAttribute("50", "125000", "77498", "300000", new string[0])]
-        public virtual void UserShouldBeAbleToSeeProductDependingOnAgeAndZipCode(string age, string propertyValue, string zipCode, string firstMortgageBalance, string[] exampleTags)
+        [Xunit.TraitAttribute("Description", "User should be able to see Estimate results")]
+        [Xunit.InlineDataAttribute("70", "1,500,000", "90210", "300000", "$936,000", new string[0])]
+        public virtual void UserShouldBeAbleToSeeEstimateResults(string age, string propertyValue, string zipCode, string remainingMortgageBalance, string remainingEquity, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("age", age);
             argumentsOfScenario.Add("propertyValue", propertyValue);
             argumentsOfScenario.Add("zipCode", zipCode);
-            argumentsOfScenario.Add("firstMortgageBalance", firstMortgageBalance);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User should be able to see product depending on age and zip code", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            argumentsOfScenario.Add("remainingMortgageBalance", remainingMortgageBalance);
+            argumentsOfScenario.Add("remainingEquity", remainingEquity);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User should be able to see Estimate results", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 7
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -126,30 +127,36 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
 #line 8
-testRunner.When(string.Format("user fills in Borrower Details \'{0}\', \'{1}\', \'{2}\', \'{3}\'", age, propertyValue, zipCode, firstMortgageBalance), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+testRunner.When(string.Format("user fills in Borrower Details \'{0}\', \'{1}\', \'{2}\', \'{3}\'", age, propertyValue, zipCode, remainingMortgageBalance), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 9
+testRunner.Then("estimate calculation link should be visible", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 10
+testRunner.Then("Remaining Equity tooltip should be enabled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 11
+testRunner.Then(string.Format("Remaining Equity value \'{0}\' should be visible", remainingEquity), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="User should be able to see product depending on age and zip code - with second mo" +
-            "rtgage")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="User should be able to download Mortgage Calculator results")]
         [Xunit.TraitAttribute("FeatureTitle", "Mortgage Calculator")]
-        [Xunit.TraitAttribute("Description", "User should be able to see product depending on age and zip code - with second mo" +
-            "rtgage")]
-        [Xunit.InlineDataAttribute("50", "125000", "77498", "300000", "200000", new string[0])]
-        public virtual void UserShouldBeAbleToSeeProductDependingOnAgeAndZipCode_WithSecondMortgage(string age, string propertyValue, string zipCode, string firstMortgageBalance, string secondMortgageBalance, string[] exampleTags)
+        [Xunit.TraitAttribute("Description", "User should be able to download Mortgage Calculator results")]
+        [Xunit.InlineDataAttribute("70", "1,500,000", "90210", "300000", "$936,000", new string[0])]
+        public virtual void UserShouldBeAbleToDownloadMortgageCalculatorResults(string age, string propertyValue, string zipCode, string remainingMortgageBalance, string remainingEquity, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("age", age);
             argumentsOfScenario.Add("propertyValue", propertyValue);
             argumentsOfScenario.Add("zipCode", zipCode);
-            argumentsOfScenario.Add("firstMortgageBalance", firstMortgageBalance);
-            argumentsOfScenario.Add("secondMortgageBalance", secondMortgageBalance);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User should be able to see product depending on age and zip code - with second mo" +
-                    "rtgage", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 13
+            argumentsOfScenario.Add("remainingMortgageBalance", remainingMortgageBalance);
+            argumentsOfScenario.Add("remainingEquity", remainingEquity);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User should be able to download Mortgage Calculator results", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 17
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -172,9 +179,14 @@ this.ScenarioInitialize(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line hidden
-#line 14
-testRunner.When(string.Format("user fills in Borrower Details with second mortgage \'{0}\', \'{1}\', \'{2}\', \'{3}\', \'" +
-                            "{4}\'", age, propertyValue, zipCode, firstMortgageBalance, secondMortgageBalance), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 18
+testRunner.When(string.Format("user fills in Borrower Details \'{0}\', \'{1}\', \'{2}\', \'{3}\'", age, propertyValue, zipCode, remainingMortgageBalance), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 19
+testRunner.And("user clicks on Download PDF link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 20
+testRunner.Then("PDF should be dowloaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

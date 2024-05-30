@@ -10,13 +10,13 @@ namespace MortgageCalculator.Pages
     public class AppPages
     {
         public readonly ISpecFlowOutputHelper specFlowOutputHelper;
-        public readonly HomePage mainPage;
+        public readonly HomePage homePage;
 
 
-        public AppPages(ISpecFlowOutputHelper specFlowOutputHelper, HomePage mainPage)
+        public AppPages(ISpecFlowOutputHelper specFlowOutputHelper, HomePage homePage)
         {
 
-            this.mainPage = mainPage;
+            this.homePage = homePage;
             this.specFlowOutputHelper = specFlowOutputHelper;
 
         }
