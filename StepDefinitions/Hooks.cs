@@ -14,7 +14,7 @@ namespace MortgageCalculator.StepDefinitions
         private IPlaywright playwright;
         private IBrowser browser;
         private IBrowserContext context;
-        public IPage page;
+        public IPage page { get; set; } = null!;
         public static int numberOfFailedtests;
         private static BrowserNewContextOptions testDevice;
         private readonly ScenarioContext scenarioContext;

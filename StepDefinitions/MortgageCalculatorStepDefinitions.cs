@@ -2,7 +2,7 @@ using Microsoft.Playwright;
 using MortgageCalculator.Pages;
 using MortgageCalculator.Support;
 using TechTalk.SpecFlow.Infrastructure;
-//using static MortgageCalculator.Support.CommonMethods;
+using static MortgageCalculator.Support.CommonMethods;
 
 
 namespace MortgageCalculator.StepDefinitions
